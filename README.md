@@ -1,396 +1,273 @@
-# FastAPI ML Image Classification API
+# 🧪 Tablet Image Analyzer - Full Stack Application
 
-A production-ready FastAPI boilerplate for image classification using deep learning models. This API uses pre-trained TensorFlow/Keras models (MobileNetV2 by default) to classify images with high accuracy.
+AI-powered pharmaceutical tablet dissolution analysis platform combining FastAPI backend with React frontend.
 
-## Features`
+## 📋 Project Overview
 
-- 🚀 **Fast & Modern**: Built with FastAPI for high performance
-- 🤖 **Machine Learning**: Pre-trained MobileNetV2 model for image classification
-- 📸 **Image Processing**: Support for JPEG, PNG, GIF, BMP, and WebP formats
-- 📊 **Automatic Documentation**: Interactive API docs at `/docs` and `/redoc`
-- 🔄 **Batch Processing**: Classify multiple images in a single request
-- 📈 **Detailed Analysis**: Get image metadata along with predictions
-- 🎯 **High Accuracy**: Uses ImageNet-trained models with 1000+ classes
+This application analyzes pharmaceutical tablet dissolution using Surface Dissolution Imaging (SDi2) and Convolutional Neural Networks with Grad-CAM explainability.
 
-## Project Structure
+**Based on research:** [Explainable AI in Pharmaceutics](https://www.mdpi.com/1999-4923/18/4/481)
+
+### Key Features
+
+- 🤖 **AI-Powered Analysis**: CNN model for dissolution prediction (R² = 0.89, RMSE = 11.57%)
+- 📊 **Dual-Wavelength Imaging**: 280nm (API detection) + 520nm (structural analysis)
+- 🔍 **Explainable AI**: Grad-CAM heatmaps showing model attention
+- 📈 **Real-time Dashboard**: Dissolution curves and metrics visualization
+- 🎨 **Modern UI**: Dark/light mode, responsive design, smooth animations
+- 🖼️ **Image Processing**: Upload, crop, and analyze multiple tablet images
+
+## 🏗️ Architecture
 
 ```
-fastapi-ml-boilerplate/
-├── app/
-│   ├── __init__.py          # Package initialization
-│   ├── main.py              # FastAPI application and endpoints
-│   ├── ml_models.py         # ML model implementation
-│   ├── schemas.py           # Pydantic models for validation
-│   └── utils.py             # Utility functions
-├── uploads/                 # Directory for uploaded images
-├── requirements.txt         # Python dependencies
-├── .gitignore              # Git ignore rules
-└── README.md               # This file
+IBM-HACKATHON/
+├── app/                    # FastAPI Backend
+│   ├── main.py            # API endpoints
+│   ├── ml_models.py       # ML model implementation
+│   ├── schemas.py         # Pydantic models
+│   └── utils.py           # Utility functions
+├── frontend/              # React Frontend
+│   ├── src/
+│   │   ├── components/    # React components
+│   │   ├── services/      # API services
+│   │   ├── store/         # State management
+│   │   └── styles/        # Tailwind CSS
+│   └── public/            # Static assets
+├── requirements.txt       # Python dependencies
+└── README.md             # This file
 ```
 
-## Installation
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package manager)
+- **Backend**: Python 3.8+, pip
+- **Frontend**: Node.js 18+, npm
 
-### Setup
-
-1. **Clone or download this repository**
-
-2. **Create a virtual environment** (recommended):
-   ```bash
-   python -m venv venv
-   
-   # On Windows
-   venv\Scripts\activate
-   
-   # On macOS/Linux
-   source venv/bin/activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-   **Note**: TensorFlow installation may take several minutes and requires ~500MB of disk space.
-
-## Usage
-
-### Starting the Server
-
-Run the development server:
+### 1. Backend Setup (FastAPI)
 
 ```bash
-uvicorn app.main:app --reload
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start backend server
+uvicorn app.main:app --reload --port 8000
 ```
 
-Or use Python directly:
+Backend will be available at: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+- Alternative Docs: http://localhost:8000/redoc
+
+### 2. Frontend Setup (React)
 
 ```bash
-python -m app.main
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-The API will be available at:
-- **API**: http://localhost:8000
-- **Interactive Docs**: http://localhost:8000/docs
-- **Alternative Docs**: http://localhost:8000/redoc
+Frontend will be available at: http://localhost:5173
 
-### API Endpoints
+## 📡 API Endpoints
 
-#### 1. Health Check
-```http
-GET /
-GET /health
+### Backend (FastAPI)
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/analyze` | POST | Analyze tablet image and predict dissolution |
+| `/metrics` | GET | Get model performance metrics (R², RMSE) |
+| `/dissolution` | GET | Get dissolution timeline stages |
+| `/explain` | POST | Get Grad-CAM explanation for image |
+| `/health` | GET | Health check endpoint |
+
+### Example Request
+
+```bash
+curl -X POST "http://localhost:8000/analyze" \
+  -F "file=@tablet_image.jpg"
 ```
 
-Check if the API is running and the model is loaded.
+### Example Response
 
-**Response**:
 ```json
 {
-  "status": "healthy",
-  "message": "FastAPI ML Image Classification API is running",
-  "version": "1.0.0",
-  "model": "MobileNetV2"
-}
-```
-
-#### 2. Classify Single Image
-```http
-POST /predict
-```
-
-Upload and classify a single image.
-
-**Request**:
-- Method: POST
-- Content-Type: multipart/form-data
-- Body: `file` (image file)
-
-**Example using cURL**:
-```bash
-curl -X POST "http://localhost:8000/predict" \
-  -H "accept: application/json" \
-  -H "Content-Type: multipart/form-data" \
-  -F "file=@path/to/your/image.jpg"
-```
-
-**Example using Python**:
-```python
-import requests
-
-url = "http://localhost:8000/predict"
-files = {"file": open("image.jpg", "rb")}
-response = requests.post(url, files=files)
-print(response.json())
-```
-
-**Response**:
-```json
-{
-  "filename": "cat.jpg",
   "predictions": [
     {
-      "label": "Egyptian Cat",
-      "confidence": 0.8234
+      "label": "early_dissolution",
+      "confidence": 0.85
     },
     {
-      "label": "Tabby Cat",
-      "confidence": 0.1456
-    },
-    {
-      "label": "Tiger Cat",
-      "confidence": 0.0234
+      "label": "mid_dissolution",
+      "confidence": 0.12
     }
   ],
-  "model": "MobileNetV2"
+  "model": "SDi2-CNN-Mock-v1"
 }
 ```
 
-#### 3. Batch Classification
-```http
-POST /predict/batch
-```
+## 🎨 Frontend Features
 
-Classify multiple images at once (max 10 images).
+### Current Features ✅
 
-**Request**:
-- Method: POST
-- Content-Type: multipart/form-data
-- Body: Multiple `files` (image files)
+- **Multi-Image Upload**: Drag-drop interface with batch processing
+- **Image Cropping**: Built-in cropper with zoom and rotation
+- **Metadata Input**: Time point and pH level for each image
+- **Dark/Light Mode**: Automatic theme switching
+- **Animated Background**: Medical-themed particle effects
+- **Responsive Design**: Works on desktop and mobile
 
-**Example using cURL**:
-```bash
-curl -X POST "http://localhost:8000/predict/batch" \
-  -F "files=@image1.jpg" \
-  -F "files=@image2.jpg" \
-  -F "files=@image3.jpg"
-```
+### Coming Soon 🚧
 
-#### 4. Detailed Image Analysis
-```http
-POST /analyze
-```
+- **3D Tablet Viewer**: Three.js visualization with texture mapping
+- **Dissolution Charts**: Interactive Recharts graphs
+- **Grad-CAM Overlay**: Heatmap visualization on 3D model
+- **Time Scrubber**: Navigate through dissolution stages
+- **Export Reports**: PDF generation with analysis results
 
-Get detailed image information including format, dimensions, and predictions.
+## 🔧 Configuration
 
-**Response**:
-```json
-{
-  "filename": "photo.jpg",
-  "format": "JPEG",
-  "mode": "RGB",
-  "size": {
-    "width": 1920,
-    "height": 1080
-  },
-  "predictions": [
-    {
-      "label": "Golden Retriever",
-      "confidence": 0.9123
-    }
-  ],
-  "model": "MobileNetV2"
-}
-```
+### Backend Configuration
 
-#### 5. List Available Models
-```http
-GET /models
-```
+Edit `app/main.py` to configure:
+- CORS origins
+- Model parameters
+- File upload limits
 
-Get information about available ML models.
+### Frontend Configuration
 
-## Supported Image Formats
-
-- JPEG/JPG
-- PNG
-- GIF
-- BMP
-- WebP
-
-## Machine Learning Model
-
-### Default Model: MobileNetV2
-
-- **Architecture**: MobileNetV2
-- **Training Dataset**: ImageNet (1000 classes)
-- **Input Size**: 224x224 pixels
-- **Advantages**: 
-  - Lightweight and fast
-  - Good accuracy
-  - Low memory footprint
-  - Suitable for production
-
-### Switching Models
-
-You can easily switch to other pre-trained models by modifying `app/ml_models.py`:
-
-**Available alternatives**:
-- ResNet50 (higher accuracy, slower)
-- InceptionV3 (good balance)
-- EfficientNetB0 (efficient and accurate)
-
-**Example** (in `ml_models.py`):
-```python
-from tensorflow.keras.applications import ResNet50
-from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
-
-self.model = ResNet50(weights='imagenet', include_top=True)
-```
-
-## Configuration
-
-### Environment Variables
-
-Create a `.env` file for configuration (optional):
-
+Edit `frontend/.env.local`:
 ```env
-# Server Configuration
-HOST=0.0.0.0
-PORT=8000
-
-# Model Configuration
-MODEL_NAME=MobileNetV2
-TOP_K_PREDICTIONS=5
-
-# File Upload
-MAX_FILE_SIZE_MB=10
+VITE_API_URL=http://localhost:8000
+VITE_API_KEY=dev_key_test
+VITE_MODEL_ENDPOINT=/analyze
+VITE_TIMEOUT=30000
 ```
 
-### Customization
+## 📊 Model Performance
 
-- **Change number of predictions**: Modify `top_k` parameter in `ImageClassifier` initialization
-- **Adjust input size**: Change `input_shape` in `ml_models.py`
-- **Add authentication**: Implement JWT or API key authentication in `main.py`
-- **Enable CORS**: Already configured, adjust origins in `main.py` as needed
+Current metrics (from research paper):
+- **R² Score**: 0.89
+- **RMSE**: 11.57%
+- **Wavelengths**: 280nm + 520nm
+- **Inference Time**: <30s per image
 
-## Testing
+## 🛠️ Tech Stack
 
-### Using the Interactive Docs
+### Backend
+- **FastAPI** - Modern Python web framework
+- **TensorFlow/Keras** - Deep learning models
+- **Pillow** - Image processing
+- **Pydantic** - Data validation
+- **Uvicorn** - ASGI server
 
-1. Navigate to http://localhost:8000/docs
-2. Click on any endpoint
-3. Click "Try it out"
-4. Upload an image and execute
+### Frontend
+- **React 19** - UI framework
+- **Vite** - Build tool
+- **Tailwind CSS v4** - Styling
+- **Zustand** - State management
+- **Framer Motion** - Animations
+- **Axios** - HTTP client
+- **react-easy-crop** - Image cropping
 
-### Using Python
+## 📚 Documentation
 
-```python
-import requests
+- **Frontend README**: `frontend/README.md`
+- **Architecture**: `frontend/ARCHITECTURE.md`
+- **Component Specs**: `frontend/COMPONENT_SPECS.md`
+- **Implementation Guide**: `frontend/IMPLEMENTATION_GUIDE.md`
 
-# Test prediction
-url = "http://localhost:8000/predict"
-files = {"file": open("test_image.jpg", "rb")}
-response = requests.post(url, files=files)
+## 🧪 Testing
 
-print("Status:", response.status_code)
-print("Result:", response.json())
-```
-
-### Using cURL
-
+### Backend Tests
 ```bash
-# Health check
-curl http://localhost:8000/health
-
-# Predict
-curl -X POST "http://localhost:8000/predict" \
-  -F "file=@test_image.jpg"
+pytest
 ```
 
-## Performance
+### Frontend Tests
+```bash
+cd frontend
+npm run test
+```
 
-- **Startup Time**: ~5-10 seconds (model loading)
-- **Prediction Time**: ~100-300ms per image (CPU)
-- **Memory Usage**: ~500MB (model + runtime)
-- **Concurrent Requests**: Supports multiple simultaneous requests
+## 🐛 Troubleshooting
 
-## Deployment
+### Backend Issues
 
-### Production Considerations
+**TensorFlow installation fails:**
+```bash
+pip install tensorflow --upgrade
+```
 
-1. **Use Gunicorn with Uvicorn workers**:
-   ```bash
-   pip install gunicorn
-   gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker
-   ```
+**Port 8000 already in use:**
+```bash
+uvicorn app.main:app --reload --port 8001
+```
 
-2. **Set proper CORS origins** in `main.py`
+### Frontend Issues
 
-3. **Add rate limiting** for API protection
+**Backend not responding:**
+- Ensure FastAPI is running on port 8000
+- Check CORS is enabled in `app/main.py`
+- Verify `.env.local` has correct API URL
 
-4. **Use environment variables** for configuration
+**Build errors:**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
 
-5. **Enable HTTPS** with reverse proxy (nginx/Apache)
+## 🚢 Deployment
 
-### Docker Deployment
-
-Create a `Dockerfile`:
+### Backend (Docker)
 
 ```dockerfile
 FROM python:3.9-slim
-
 WORKDIR /app
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
+COPY app/ ./app/
 EXPOSE 8000
-
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-Build and run:
+### Frontend (Vercel/Netlify)
+
 ```bash
-docker build -t fastapi-ml-api .
-docker run -p 8000:8000 fastapi-ml-api
+cd frontend
+npm run build
+# Deploy dist/ folder
 ```
 
-## Troubleshooting
+## 📄 License
 
-### Common Issues
+MIT License
 
-1. **TensorFlow installation fails**:
-   - Ensure you have Python 3.8-3.11
-   - Try: `pip install tensorflow --upgrade`
+## 🤝 Contributing
 
-2. **Model loading is slow**:
-   - First run downloads the model (~14MB for MobileNetV2)
-   - Subsequent runs use cached model
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-3. **Out of memory errors**:
-   - Reduce batch size
-   - Use a lighter model (MobileNetV2 is already lightweight)
-   - Increase system RAM
-
-4. **Import errors**:
-   - Ensure all dependencies are installed: `pip install -r requirements.txt`
-   - Activate virtual environment
-
-## Contributing
-
-Feel free to submit issues, fork the repository, and create pull requests for any improvements.
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Resources
-
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [TensorFlow/Keras Models](https://www.tensorflow.org/api_docs/python/tf/keras/applications)
-- [ImageNet Classes](https://gist.github.com/yrevar/942d3a0ac09ec9e5eb3a)
-
-## Support
+## 📧 Support
 
 For questions or issues, please open an issue on the repository.
 
 ---
 
-**Built with ❤️ using FastAPI and TensorFlow**
+**Built with ❤️ using FastAPI, React, and TensorFlow**
