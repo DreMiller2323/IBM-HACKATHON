@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+  /* Custom color palette */
+  --color-pharma-blue-50: #f0f7ff;
+  --color-pharma-blue-100: #e0f2fe;
+  --color-pharma-blue-200: #bae6fd;
+  --color-pharma-blue-300: #7dd3fc;
+  --color-pharma-blue-400: #38bdf8;
+  --color-pharma-blue-500: #0ea5e9;
+  --color-pharma-blue-600: #0284c7;
+  --color-pharma-blue-700: #0369a1;
+  --color-pharma-blue-800: #075985;
+  --color-pharma-blue-900: #0c3d66;
+  
+  --color-pharma-green-50: #f0fdf4;
+  --color-pharma-green-500: #22c55e;
+  --color-pharma-green-600: #16a34a;
+  --color-pharma-green-900: #145631;
+  
+  --color-pharma-amber-500: #f97316;
+  --color-pharma-amber-600: #ea580c;
+}
+
+/* Base styles */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  
+  :root.dark {
+    color-scheme: dark;
+    /* Ensure dark background for body */
+    background-color: #0f172a;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Better text rendering */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  /* Surfaces */
+  .surface-primary {
+    @apply bg-white dark:bg-slate-950 transition-colors duration-300;
+  }
+
+  .surface-secondary {
+    @apply bg-slate-50 dark:bg-slate-900 transition-colors duration-300;
+  }
+
+  .surface-tertiary {
+    @apply bg-slate-100 dark:bg-slate-800 transition-colors duration-300;
+  }
+
+  /* Text */
+  .text-primary {
+    @apply text-slate-900 dark:text-slate-100 transition-colors duration-300;
+  }
+
+  .text-secondary {
+    @apply text-slate-600 dark:text-slate-300 transition-colors duration-300;
+  }
+
+  .text-tertiary {
+    @apply text-slate-500 dark:text-slate-400 transition-colors duration-300;
+  }
+
+  /* Borders */
+  .border-light {
+    @apply border-slate-200 dark:border-slate-700 transition-colors duration-300;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 p-6 shadow-sm dark:shadow-md transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 p-6 shadow-sm dark:shadow-md transition-all duration-300 hover:shadow-md dark:hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 cursor-pointer;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-pharma-blue-600 dark:bg-pharma-blue-600 text-white hover:bg-pharma-blue-700 dark:hover:bg-pharma-blue-700 transition-colors duration-200 px-6 py-3 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-pharma-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-200 px-6 py-3 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200 px-6 py-3 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 dark:bg-red-600 text-white hover:bg-red-700 dark:hover:bg-red-700 transition-colors duration-200 px-6 py-3 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Inputs */
+  .input-base {
+    @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 focus:outline-none focus:border-pharma-blue-500 dark:focus:border-pharma-blue-400 focus:ring-2 focus:ring-pharma-blue-500/20 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Badges */
+  .badge-success {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-200;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-200;
+  }
+
+  .badge-warning {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-50 dark:bg-amber-900 text-amber-700 dark:text-amber-200;
+  }
+
+  .badge-info {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200;
+  }
+
+  /* Spinners */
+  .spinner {
+    @apply border-4 border-slate-200 dark:border-slate-700 border-t-pharma-blue-600 dark:border-t-pharma-blue-400 rounded-full animate-spin;
+  }
+
+  /* Container */
+  .container-app {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Made with Bob */
