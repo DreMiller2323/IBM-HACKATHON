@@ -1,0 +1,21 @@
+# FastAPI and Web Server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Machine Learning and Image Processing
+tensorflow==2.15.0
+numpy==1.24.3
+Pillow==10.1.0
+
+# Data Validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Optional: For better performance
+python-jose[cryptography]==3.3.0  # If you add JWT authentication later
+passlib[bcrypt]==1.7.4  # If you add authentication later
+
+# Development (optional)
+pytest==7.4.3
+httpx==0.25.2
