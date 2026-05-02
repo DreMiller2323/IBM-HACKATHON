@@ -94,9 +94,9 @@ function App() {
                   </div>
                   <div className="card text-center">
                     <p className="text-3xl font-bold text-pharma-amber-600 dark:text-pharma-amber-400">
-                      2 λ
+                      520nm
                     </p>
-                    <p className="text-sm text-secondary mt-2">Wavelengths</p>
+                    <p className="text-sm text-secondary mt-2">Wavelength</p>
                   </div>
                   <div className="card text-center">
                     <p className="text-3xl font-bold text-pharma-blue-600 dark:text-pharma-blue-400">
@@ -139,9 +139,9 @@ function App() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold text-primary mb-2">Dual-Wavelength Analysis</h3>
+                    <h3 className="text-lg font-semibold text-primary mb-2">Wavelength Analysis</h3>
                     <p className="text-sm text-secondary">
-                      280nm UV for API detection + 520nm visible for structural erosion patterns
+                      520nm visible light for structural erosion pattern detection
                     </p>
                   </div>
 
@@ -166,7 +166,7 @@ function App() {
                     </span>
                   </p>
                   <p className="text-xs text-tertiary mt-2">
-                    Dual-wavelength analysis (280nm UV + 520nm Visible) • CNN with Grad-CAM explainability • R² = 0.89
+                    520nm visible light analysis • CNN with Grad-CAM explainability • R² = 0.89
                   </p>
                 </div>
               </div>
