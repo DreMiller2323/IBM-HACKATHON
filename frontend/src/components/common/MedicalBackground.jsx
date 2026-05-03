@@ -24,10 +24,10 @@ export default function MedicalBackground() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {/* Gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-pharma-blue-950/5 to-pharma-blue-900/10 dark:from-transparent dark:via-pharma-blue-900/10 dark:to-pharma-blue-800/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-pharma-blue-50/10 to-pharma-blue-100/20 dark:from-transparent dark:via-pharma-blue-900/10 dark:to-pharma-blue-800/20" />
       
       {/* Floating molecules/particles */}
-      <svg className={`absolute inset-0 w-full h-full transition-opacity duration-300 ${isDark ? 'opacity-30' : 'opacity-5'}`}>
+      <svg className={`absolute inset-0 w-full h-full transition-opacity duration-300 ${isDark ? 'opacity-30' : 'opacity-15'}`}>
         <defs>
           {/* Molecule structure pattern */}
           <pattern id="molecule" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
@@ -86,7 +86,7 @@ export default function MedicalBackground() {
         {/* Subtle grid lines */}
         <motion.g
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.05 }}
+          animate={{ opacity: 0.1 }}
           transition={{ duration: 2 }}
         >
           {Array.from({ length: 10 }).map((_, i) => (
@@ -98,7 +98,7 @@ export default function MedicalBackground() {
                 y2={`${i * 10}%`}
                 stroke="currentColor"
                 strokeWidth="0.5"
-                className="text-pharma-blue-300 dark:text-pharma-blue-700"
+                className="text-pharma-blue-200 dark:text-pharma-blue-700"
               />
               <line
                 x1={`${i * 10}%`}
@@ -107,7 +107,7 @@ export default function MedicalBackground() {
                 y2="100%"
                 stroke="currentColor"
                 strokeWidth="0.5"
-                className="text-pharma-blue-300 dark:text-pharma-blue-700"
+                className="text-pharma-blue-200 dark:text-pharma-blue-700"
               />
             </React.Fragment>
           ))}
@@ -116,7 +116,7 @@ export default function MedicalBackground() {
       
       {/* Floating molecule structures */}
       <motion.div
-        className={`absolute top-1/4 left-1/4 w-32 h-32 transition-opacity duration-300 ${isDark ? 'opacity-20' : 'opacity-5'}`}
+        className={`absolute top-1/4 left-1/4 w-32 h-32 transition-opacity duration-300 ${isDark ? 'opacity-20' : 'opacity-10'}`}
         animate={{
           rotate: 360,
           scale: [1, 1.1, 1],
@@ -141,7 +141,7 @@ export default function MedicalBackground() {
       </motion.div>
       
       <motion.div
-        className={`absolute bottom-1/4 right-1/4 w-24 h-24 transition-opacity duration-300 ${isDark ? 'opacity-20' : 'opacity-5'}`}
+        className={`absolute bottom-1/4 right-1/4 w-24 h-24 transition-opacity duration-300 ${isDark ? 'opacity-20' : 'opacity-10'}`}
         animate={{
           rotate: -360,
           scale: [1, 1.2, 1],

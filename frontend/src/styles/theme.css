@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  /* Configuration du mode sombre */
+  --variant-dark: .dark &;
+
   /* Custom color palette */
   --color-pharma-blue-50: #f0f7ff;
   --color-pharma-blue-100: #e0f2fe;

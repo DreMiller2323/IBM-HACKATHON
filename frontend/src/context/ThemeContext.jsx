@@ -7,20 +7,21 @@ export const ThemeProvider = ({ children }) => {
     const saved = localStorage.getItem('pharma-theme');
     if (saved) return saved === 'dark';
     
-    // Si pas de sauvegarde, on peut soit forcer le dark (ton choix)
-    // soit suivre la préférence du système :
-    // return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return true; 
+    // Default to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  // Unique source de vérité pour le DOM
+  // Single source of truth for the DOM
   useEffect(() => {
     const root = document.documentElement;
+    console.log('🌓 Theme changing. isDark:', isDark);
     if (isDark) {
       root.classList.add('dark');
+      console.log('✅ Added .dark class to html');
       localStorage.setItem('pharma-theme', 'dark');
     } else {
       root.classList.remove('dark');
+      console.log('❌ Removed .dark class from html');
       localStorage.setItem('pharma-theme', 'light');
     }
   }, [isDark]);
