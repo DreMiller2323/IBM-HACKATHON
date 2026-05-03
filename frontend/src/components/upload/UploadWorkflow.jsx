@@ -76,8 +76,8 @@ export default function UploadWorkflow({ onAnalysisComplete }) {
         phLevel: u.phLevel
       }));
       
-      // Call mock API (or real API when available)
-      const result = await modelService.mockAnalyze(files, metadata);
+      // Call real analysis API with image data
+      const result = await modelService.analyzeImages(files, metadata);
       
       setProcessing(false, 100);
       setCurrentAnalysis(result);

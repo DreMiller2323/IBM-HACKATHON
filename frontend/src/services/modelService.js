@@ -23,10 +23,13 @@ export const modelService = {
     if (options.api) formData.append('api', options.api);
     if (options.excipient) formData.append('excipient', options.excipient);
     
+    console.log('[ModelService] Sending analysis request', {
+      url: '/api/v1/analyze',
+      imageCount: images.length,
+      metadata,
+    });
+
     const response = await apiClient.post('/api/v1/analyze', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
       onUploadProgress: (progressEvent) => {
         const percentCompleted = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total

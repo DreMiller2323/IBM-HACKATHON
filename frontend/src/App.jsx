@@ -25,20 +25,20 @@ function App() {
         setProcessing(true);
         
         // Prepare data for API
-        const analysisData = uploads.map(u => ({
-          file: u.file,
-          time: u.time,
-          ph: u.ph,
+        const images = uploads.map(u => u.file);
+        const metadata = uploads.map(u => ({
+          timePoint: u.time,
+          phLevel: u.ph,
         }));
         
-        // Call mock API
-        const result = await modelService.mockAnalyze(analysisData);
+        // Call real API
+        const result = await modelService.analyzeImages(images, metadata);
         
         setCurrentAnalysis(result);
         setProcessing(false);
         setView('results');
       } catch (error) {
-        console.error('Analysis failed:', error);
+        console.log('Analysis failed:', error);
         setProcessing(false);
         alert('Analysis failed. Please try again.');
       }
